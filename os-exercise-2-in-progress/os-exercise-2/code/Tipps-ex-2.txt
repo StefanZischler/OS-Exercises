@@ -1,0 +1,58 @@
+T1: 
+frok process => int pid = fork()
+if child => id != 0; -> Parent/median() (PID = 0) -> Child/mean() (PID != 0)
+create a shared memory file
+fd = shm_open(file, O_CREAT|O_RDWR, file permission/777)
+-> if you cant open file, display "error", exit process -> if (fd < 0)
+then
+Steps for Child-process:
+-> if no error, truncate the file
+-> calculate the mean or the median
+-> create a new mapping in memory with mmap(address, size of file, file protection => PROT_READ |PROT_WRITE,flags => MAP_SHARED, file description => fd, offset => 0)
+-> if mapping succesfully -> will return a pointer to mapped array
+-> save the mean there
+-> remove memory mapping
+-> close the file (fd)
+else
+Steps for parent-process:
+-> calculate the mean or the median
+-> wait for child process to finish
+-> open shared memory file with shm_open()
+-> if no error, create the mapping from the shared file with mmap
+-> output the median and result of child process
+-> remove mapping
+-> close the file
+-> remove link from shared memory! 
+Task 1: gcc T1.c -o T1.o -lrt -> ./T1.o
+
+Task2:
+-> define tread with pthread_t 
+-> create thread pthread_create(thread, attribute => NULL, start_routine => median(), arguments of function)
+-> create void typ median() -> Use pointers!
+-> calculate the mean
+-> wait for thread termination -> pthread_join(thread, return of thread)
+-> print mean and median
+-> deallocate the memory where you are pointing with free()
+Task 2: gcc T2.c -pthread -o T2.o -> T2.o
+
+Task3:
+for example 5 threads (1 main + create 4 threads)
+array of size 10'000 and all of 1 [1,1,1,1,1,...]
+-> every threads accumulates 2000 (10'000/5) variables
+-> careful of threads interfering with each other -> use mutex locks on global variable
+pthread_create(thread, NULL, function to call -> accumulate, function parameters-> thread_args)
+th1_args.start = 0;
+th1_args.end = siz/num_threads;
+-> be sure that all threads are finished -> pthread_join(thread, NULL);
+-> print the result 
+
+Task4:
+first come first serve:
+sort by arrival time
+shortest-job first:
+sort by execution time (smallest first)
+longest-job first:
+sort by execution time (biggest first)
+-> create swap fuction to sort arrays
+set starting time for each process
+-> first process starting time 0 -> second one starts at 0 + execution time of process 1
