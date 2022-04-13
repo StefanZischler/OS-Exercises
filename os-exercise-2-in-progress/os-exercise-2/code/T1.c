@@ -48,7 +48,7 @@ int main ()
 		//create shared memory file
 		int fd;
 		fd = shm_open(NAME, O_CREAT | O_RDWR, 0777);
-		printf("fd: %d\n",fd);
+		//printf("fd: %d\n",fd);
 		if (fd < 0) {
 		//error message if file wasnt created
 		printf("Error creating shared memory: %s\n",strerror(errno));

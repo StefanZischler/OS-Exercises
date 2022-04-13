@@ -63,6 +63,7 @@ int main ()
 	for (int i = 0; i < NUM_THREADS -1; i++) {
 		pthread_join(threads[i], NULL);
 	}
-	printf("sum  is %d\n", result);
+	//print result
+	printf("Result is: %d\n", result);
 }
 

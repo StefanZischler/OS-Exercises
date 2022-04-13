@@ -132,8 +132,12 @@ void display_average_waiting_time(struct process * arr)
 	waiting_time[0]  = 0;
 	//calculate the waiting time for each process
 	for (int i = 1; i < SIZE; i++) {
-		waiting_time[i] = process[i-1].execution_time - waiting_time[i-1];
-		printf("Waiting time: %d\n", waiting_time[i]);
+		waiting_time[i] = process[i-1].execution_time + process[i-1].arrival_time + waiting_time[i-1]- process[i].arrival_time;
+		if (waiting_time[i] < 0) {
+			waiting_time[i] = 0;
+		}
+		int process_num = i +1;
+		printf("Waiting time for process %d: %d\n",process_num, waiting_time[i]);
 	}
 	//calculate total waiting time of all processes
 	int total_wait_time = 0;
@@ -141,7 +145,7 @@ void display_average_waiting_time(struct process * arr)
 		total_wait_time += waiting_time[i];
 	}
 	//calculate average waiting time over all processes
-	int avrg_time =(float)total_wait_time / (float)SIZE;
+	float avrg_time =(float)total_wait_time / (float)SIZE;
 	//display average waiting time
-	printf("Average waiting time: %d\n", avrg_time);
+	printf("Average waiting time: %.3f\n", avrg_time);
 }
