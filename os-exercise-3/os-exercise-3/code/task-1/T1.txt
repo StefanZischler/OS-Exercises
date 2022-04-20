@@ -1,0 +1,85 @@
+i)
+"./T1 10 5 0" returns the following output:
+Producer produced: 1377887841, buffer position: 0 
+Producer produced: 415862829, buffer position: 1 
+Producer produced: 1114889132, buffer position: 2 
+Producer produced: 2086002842, buffer position: 3 
+Producer produced: 1479732497, buffer position: 4 
+Producer produced: 570905288, buffer position: 0 
+Producer produced: 875748229, buffer position: 1 
+Producer produced: 1684908905, buffer position: 2 
+Producer produced: 600553358, buffer position: 3 
+Producer produced: 432687250, buffer position: 4 
+Producer produced: 67394245, buffer position: 0 
+Producer produced: 1640917595, buffer position: 1 
+Producer produced: 1147325661, buffer position: 2 
+Producer produced: 743331961, buffer position: 3 
+Producer produced: 1705984252, buffer position: 4 
+Producer produced: 784655559, buffer position: 0 
+Producer produced: 620402393, buffer position: 1 
+Producer produced: 883140805, buffer position: 2 
+Producer produced: 1724079500, buffer position: 3 
+Producer produced: 262032209, buffer position: 4 
+Producer produced: 921004465, buffer position: 0
+
+"./T1 10 0 5" returns the following output:
+Consumer consumed: 0, buffer position: 0 
+Consumer consumed: 0, buffer position: 1 
+Consumer consumed: 0, buffer position: 2 
+Consumer consumed: 0, buffer position: 3 
+Consumer consumed: 0, buffer position: 4 
+Consumer consumed: -1, buffer position: 0 
+Consumer consumed: -1, buffer position: 1 
+Consumer consumed: -1, buffer position: 2 
+Consumer consumed: -1, buffer position: 3 
+Consumer consumed: -1, buffer position: 4 
+Consumer consumed: -1, buffer position: 0 
+Consumer consumed: -1, buffer position: 1 
+Consumer consumed: -1, buffer position: 2 
+Consumer consumed: -1, buffer position: 3 
+Consumer consumed: -1, buffer position: 4 
+Consumer consumed: -1, buffer position: 0 
+Consumer consumed: -1, buffer position: 1 
+Consumer consumed: -1, buffer position: 2 
+Consumer consumed: -1, buffer position: 3 
+Consumer consumed: -1, buffer position: 4 
+Consumer consumed: -1, buffer position: 0 
+Consumer consumed: -1, buffer position: 1 
+Consumer consumed: -1, buffer position: 2 
+Consumer consumed: -1, buffer position: 3 
+Consumer consumed: -1, buffer position: 4 
+
+if there are only producer threads, the producers keep producing even when the buffer is full. Likewise, if there are only consumer threads, the consumers will keep trying to consume from an already empty buffer.
+
+ii)
+after correcting the code...
+"./T1 10 5 0" returns:
+Producer produced: 73519358, buffer position: 0 
+Producer produced: 2000431322, buffer position: 1 
+Producer produced: 213945451, buffer position: 2 
+Producer produced: 730528080, buffer position: 3 
+Producer produced: 910984818, buffer position: 4 
+
+"./T1 10 0 5" returns nothing.
+
+"./T1 10 2 2" returns:
+Producer produced: 307602755, buffer position: 0 
+Consumer consumed: 307602755, buffer position: 0 
+Producer produced: 1953290728, buffer position: 1 
+Consumer consumed: 1953290728, buffer position: 1 
+Producer produced: 336124940, buffer position: 2 
+Consumer consumed: 336124940, buffer position: 2 
+Producer produced: 779054238, buffer position: 3 
+Consumer consumed: 779054238, buffer position: 3 
+Producer produced: 878430623, buffer position: 4 
+Consumer consumed: 878430623, buffer position: 4 
+Producer produced: 98849439, buffer position: 0 
+Consumer consumed: 98849439, buffer position: 0 
+Producer produced: 1758730636, buffer position: 1 
+Consumer consumed: 1758730636, buffer position: 1 
+Producer produced: 829219393, buffer position: 2 
+Consumer consumed: 829219393, buffer position: 2 
+
+The process starts with 5 empty buffer elements, which the producers can fill but the consumers cannot consume. Every time a producer thread produces something it locks 1 buffer element for the other producers, fills that buffer element and then opens it up for the consumer threads.
+Likewise if a consumer thread consumes an available buffer element (it has been filled before by a producer) it locks it for the other consumers, empties the buffer element and then opens it for the producer threads.
+While any thread changes an element in the buffer, the buffer is locked for all other threads via mutex lock, which gets released when the thread is finished accessing the buffer.

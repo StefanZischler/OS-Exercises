@@ -34,10 +34,17 @@ int insert_item(buffer_item item)
 {
     // TODO acquire "empty" semaphore and mutex lock
 
+
+    sem_wait(&empty);
+    pthread_mutex_lock(&mutex);
+
     buffer[insertPointer++] = item;
     insertPointer = insertPointer % BUFFER_SIZE;
 
     // TODO release mutex lock and "full" semaphore
+
+    pthread_mutex_unlock(&mutex);
+    sem_post(&full);
 
     return 0;
 }
@@ -46,11 +53,18 @@ int remove_item(buffer_item *item)
 {
     // TODO acquire "full" semaphore and mutex lock
 
+    sem_wait(&full);
+    pthread_mutex_lock(&mutex);
+   
+
     *item = buffer[removePointer];
     buffer[removePointer++] = -1;
     removePointer = removePointer % BUFFER_SIZE;
 
     // TODO release mutex lock and "empty" semaphore
+
+    pthread_mutex_unlock(&mutex);
+    sem_post(&empty);
 
     return 0;
 }
@@ -71,6 +85,12 @@ int main(int argc, char *argv[])
     consumerThreads = atoi(argv[3]);
 
     // TODO initialize the synchronization tools
+
+    //initialize the semaphores
+    //empty is initialized with 1 open slot for each buffer element
+    sem_init(&empty, 0, BUFFER_SIZE);
+    //full is initialized with no open slots so the consumers have to wait until a buffer element is filled
+    sem_init(&full, 0, 0);
 
     srand(time(0));
 
