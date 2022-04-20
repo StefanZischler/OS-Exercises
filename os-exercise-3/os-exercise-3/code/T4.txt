@@ -1,10 +1,10 @@
 synchronization problems:
-	Bounded Buffer Problem	(see T1)
-	Readers-Writers Problem
-	Dining Philosophers Problem	(see T2)
+	Bounded Buffer Problem:	(see T1) a buffer with n slots is accessed by producers that fill these slots and consumers that empty the filled slots
+	Readers-Writers Problem: a shared data set can be read by multiple processes at the same time but only a single writer can access the data at the same time.
+	Dining Philosophers Problem: (see T2) multiple processes need and release several shared resources at the same time and need to prevent deadlocks and starvation
 
 tools:
-	mutex locks
-	semaphores
-	Peterson's solution
-	monitors
+	mutex locks: while one process holds the mutex lock, no other process can enter the same section
+	semaphores: similar to mutex locks but can allow at most n processes to enter the same section (if n==1 this is a mutex lock)
+	Peterson's solution: shared variables turn and flag indicate which process is currently allowed to enter the critical section
+	monitors: an abstract data type with internal variables that are only accessible from within the procedure. Only one process may be active within the monitor at a time
