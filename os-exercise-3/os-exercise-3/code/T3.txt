@@ -1,0 +1,2 @@
+the problem that occurs is a deadlock. thread 1 locks first_mutex first and then second_mutex, while thread 2 locks them in reverse order. If thread 1 locks first_mutex and before it can lock second_mutex, it gets locked by thread 2, neither thread can continue.
+If both threads lock the mutex locks in the same order (they both first lock first_mutex and then second_mutex) this problem can be solved.

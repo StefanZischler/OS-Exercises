@@ -1,0 +1,10 @@
+synchronization problems:
+	Bounded Buffer Problem	(see T1)
+	Readers-Writers Problem
+	Dining Philosophers Problem	(see T2)
+
+tools:
+	mutex locks
+	semaphores
+	Peterson's solution
+	monitors

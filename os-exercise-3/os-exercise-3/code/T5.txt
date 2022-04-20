@@ -1,0 +1,3 @@
+a deadlock occurs when two threads or processes prevent each other from finishing their task. Each thread waits for the other thread to finish first, before they can continue themselfes.
+
+starvation occurs when a low priority thread never executes because there are always threads with higher priority in the queue.
