@@ -26,6 +26,7 @@ void test(int i)
         state[i] = EATING;
 
         // TODO unblock threads from condition variable
+        pthread_cond_signal(&cond_vars);
     }
 }
 
@@ -41,6 +42,7 @@ void pickup_forks(int number)
         sleep(1);
 
         // TODO wait on condition variable and mutex
+       pthread_cond_wait(&cond_vars, &mutex_lock);
     }
 
     pthread_mutex_unlock(&mutex_lock);
