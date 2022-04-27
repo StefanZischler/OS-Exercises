@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "dp.h"
 
 // structure of a dining philosopher alternating between thinking and eating

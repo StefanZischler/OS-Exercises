@@ -1,3 +1,7 @@
+#pragma once
+#ifndef DP_H
+#define DP_H
+
 #include <pthread.h>
 
 #define NUMBER 5
@@ -16,4 +20,8 @@ int thread_id[NUMBER];
 pthread_cond_t cond_vars[NUMBER];
 pthread_mutex_t mutex_lock;
 
+void pickup_forks(int number);
+void return_forks(int number);
 void *philosopher(void *param);
+
+#endif 
