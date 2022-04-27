@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "dp.h"
 
 int left_neighbor(int number)
@@ -26,7 +27,7 @@ void test(int i)
         state[i] = EATING;
 
         // TODO unblock threads from condition variable
-        pthread_cond_signal(&cond_vars);
+        pthread_cond_signal(&cond_vars[i]);
     }
 }
 
@@ -42,7 +43,7 @@ void pickup_forks(int number)
         sleep(1);
 
         // TODO wait on condition variable and mutex
-       pthread_cond_wait(&cond_vars, &mutex_lock);
+       pthread_cond_wait(&cond_vars[number], &mutex_lock);
     }
 
     pthread_mutex_unlock(&mutex_lock);
