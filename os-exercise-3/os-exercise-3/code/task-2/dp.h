@@ -1,6 +1,6 @@
-#pragma once
-#ifndef DP_H
-#define DP_H
+//#pragma once
+//#ifndef DP_H
+//#define DP_H
 
 #include <pthread.h>
 
@@ -24,4 +24,4 @@ void pickup_forks(int number);
 void return_forks(int number);
 void *philosopher(void *param);
 
-#endif 
+//#endif 
