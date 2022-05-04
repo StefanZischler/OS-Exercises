@@ -8,7 +8,10 @@ int main ()
 	int histogram [10];
 	printf("enter numnber: ");
 	scanf("%d", &SIZE);
-	int generated_numbers[SIZE];	
+	//in case of large array, it has to be allocated via malloc()
+	//otherwise it would result in a stack overflow
+	//SIZE*sizeof(int) is the size of the int array in memory
+	int * generated_numbers = (int *) malloc(SIZE*sizeof(int));
 	for(int i=0;i<10;i++)
 	{
 		histogram[i]=0;
@@ -26,6 +29,8 @@ int main ()
 	{
 		printf("Value (%d) has been found %d times\n", i, histogram[i]);
 	}
+	//free up allocated space
+	free(generated_numbers);
 
 
 }
