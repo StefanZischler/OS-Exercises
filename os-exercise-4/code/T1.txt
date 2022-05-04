@@ -1,0 +1,6 @@
+1) The program as it was created a segmentation fault when allocating a very large array. The array is created on the stack but needs more memory than the stack has available, which causes the problem.
+To solve the issue, the memory for the array has to be allocated off the stack which can be done with malloc().
+
+2) The update function attempts to access parts of the memory that are not in the second array. There are two possible solutions: you could check if the index arr1[i] is a valid index for arr2 or you could force the index to be valid with the modulo function. In the former case the function will do nothing most of the time because most of the time all indexes are invalid. 
+
+3) 

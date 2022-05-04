@@ -1,2 +1,0 @@
-The program as it was created a segmentation fault when allocating a very large array. The array is created on the stack but needs more memory than the stack has available, which causes the problem.
-To solve the issue, the memory for the array has to be allocated off the stack which can be done with malloc().
