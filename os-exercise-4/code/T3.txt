@@ -1,0 +1,17 @@
+The main difference between physical and virtual memory is that the physical memory refers to the actual RAM of the system attached to the motherboard,
+but the virtual memory is a memory management technique that allows the users to execute programs larger than the actual physical memory.
+
+Physical Memory:
+- actual RAM, stores currently executing programs
+- actual memory
+- faster
+- uses swapping
+- limited trough (physical) RAM
+- can directly access CPU
+
+Virtual/Logical Memory:
+- memory management technique that creates illusion of larger physical memory for user
+- slower
+- uses paging
+- limited by size of the disk
+- cannot access CPU directly
