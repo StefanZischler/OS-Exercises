@@ -14,6 +14,7 @@ void count_sort(int  input[], int size)
 		if(max<input[i])
 			max=input[i];
 
+	//problem: memory for temp is allocated but never freed up
 	int *temp= calloc(max, sizeof(int));
 	for(int i=0;i<size;i++)
 		temp[input[i]]++;
@@ -30,6 +31,8 @@ void count_sort(int  input[], int size)
 		}
 		counter++;
 	}
+	//fix: free up previously allocated memory space
+	free(temp);
 
 }
 
@@ -37,7 +40,9 @@ int main ()
 {
 	int arr [5]={100, 100,0, 10,12 };
 	display(arr,5);
+	//while(1==1) {
 	count_sort(arr,5);
+	//}
 	printf("after sort\n");
 	display(arr,5);
 }

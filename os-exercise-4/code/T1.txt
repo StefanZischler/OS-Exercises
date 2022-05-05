@@ -3,4 +3,5 @@ To solve the issue, the memory for the array has to be allocated off the stack w
 
 2) The update function attempts to access parts of the memory that are not in the second array. There are two possible solutions: you could check if the index arr1[i] is a valid index for arr2 or you could force the index to be valid with the modulo function. In the former case the function will do nothing most of the time because most of the time all indexes are invalid. 
 
-3) 
+3) The issue with the count_sort function is that an array temp is created and memory space is allocated via calloc(). When the function is finished, this memory space is not freed up however, which means it is still reserved when the function is called the next time in the loop. If the function is repeated often enough, the entire memory is filled with temp arrays that are not in use anymore, a memory leak occurs.
+The issue can be solved if the memory for the temp array is released via free(temp) before the count_sort function terminates.
