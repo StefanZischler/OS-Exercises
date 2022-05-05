@@ -19,15 +19,17 @@ int readLinesCount(const char * str){
       if(ch=='\n')
          linesCount++;
    }
+    printf("Lines count: %d\n", linesCount);
+
    //close the file
-   fclose(fp);
- return 0;
+    fclose(fp);
+	//return number of lines
+	return linesCount;
 }
 void writeLinesCount(const char * str, int count_line){
 //TODO implement writeLinesCount which writes a new line in file str has count_line 
 	FILE *fp;
-	int line_count = count_line;
-	printf("line count: %d", line_count);   
+	int line_count = count_line;  
 	// open file to write
 	fp = fopen(str, "w");
 	if(fp == NULL) {
@@ -37,7 +39,6 @@ void writeLinesCount(const char * str, int count_line){
 	// write to file
     fprintf(fp,"%d",line_count);
 	fclose(fp);
-
 }
 int main(int argc, char * argv[])
 {
